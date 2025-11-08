@@ -1,39 +1,39 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { shareReplay, catchError } from 'rxjs/operators';
 import { Task } from '../models/task.model';
+import { environment } from '../../../environment/environment';
+import { CreateTask } from '../models/createTask.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class TaskService {
-  private apiUrl = 'http://localhost:3000/tasks'; // Update this with your actual API endpoint
+  private base = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
-  getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.apiUrl);
+  getTasks(completed: boolean | null = null): Observable<Task[]> {
+
+    let params = new HttpParams();
+    if (completed !== null) params = params.set('completed', completed.toString());
+
+    const obs = this.http.get<any>(this.base, { params });
+    return obs;
   }
 
-  getTask(id: number): Observable<Task> {
-    return this.http.get<Task>(`${this.apiUrl}/${id}`);
+  getTaskById(id: number): Observable<Task> {
+    return this.http.get<Task>(`${this.base}/${id}`);
   }
 
-  createTask(task: Task): Observable<Task> {
-    return this.http.post<Task>(this.apiUrl, task);
+  createTask(task: Partial<CreateTask>) {
+    return this.http.post<Task>(this.base, task);
   }
 
-  updateTask(id: number, task: Task): Observable<Task> {
-    return this.http.put<Task>(`${this.apiUrl}/${id}`, task);
+  updateTask(id: number, task: CreateTask) {
+    return this.http.put<void>(`${this.base}/${id}`, task);
   }
 
-  deleteTask(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-
-  toggleTaskCompletion(id: number, task: Task): Observable<Task> {
-    return this.http.patch<Task>(`${this.apiUrl}/${id}`, {
-      isCompleted: !task.isCompleted
-    });
+  deleteTask(id: number) {
+    return this.http.delete<void>(`${this.base}/${id}`);
   }
 }

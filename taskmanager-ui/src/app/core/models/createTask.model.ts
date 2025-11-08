@@ -1,7 +1,5 @@
-export interface Task {
-  id: number;
+export interface CreateTask {
   title: string;
   description?: string;
   isCompleted: boolean;
-  createdAt?: string;
 }
