@@ -1,0 +1,42 @@
+<section class="controls">
+  <div class="filters">
+    <button mat-stroked-button [class.active]="filter==='all'" (click)="changeFilter('all')">
+      <mat-icon>view_list</mat-icon> All
+    </button>
+    <button mat-stroked-button [class.active]="filter==='pending'" (click)="changeFilter('pending')">
+      <mat-icon>radio_button_unchecked</mat-icon> Pending
+    </button>
+    <button mat-stroked-button [class.active]="filter==='completed'" (click)="changeFilter('completed')">
+      <mat-icon>check_circle</mat-icon> Completed
+    </button>
+  </div>
+
+  <div class="actions">
+    <button mat-raised-button color="primary" (click)="openNew()"><mat-icon>add</mat-icon> New Task</button>
+  </div>
+</section>
+
+<div *ngIf="loading" class="spinner"><mat-spinner diameter="36"></mat-spinner></div>
+
+<div *ngIf="!loading && tasks.length===0" class="empty">
+  <p *ngIf="filter==='pending'">No pending tasks. Great work!</p>
+  <p *ngIf="filter==='completed'">No completed tasks yet.</p>
+  <p *ngIf="filter==='all'">No tasks found. Create your first task!</p>
+</div>
+
+<div class="task-list">
+  <mat-card *ngFor="let t of tasks" [ngClass]="{'completed': t.isCompleted}" class="task-card">
+    <div class="left">
+      <mat-checkbox [checked]="t.isCompleted" (change)="toggleComplete(t)"></mat-checkbox>
+    </div>
+    <div class="center">
+      <h3 class="title">{{ t.title }}</h3>
+      <p class="desc">{{ t.description }}</p>
+      <div class="date">{{ t.createdAt | date:'mediumDate' }}</div>
+    </div>
+    <div class="right">
+      <button mat-icon-button matTooltip="Edit" (click)="openEdit(t)"><mat-icon>edit</mat-icon></button>
+      <button mat-icon-button color="warn" matTooltip="Delete" (click)="confirmDelete(t)"><mat-icon>delete</mat-icon></button>
+    </div>
+  </mat-card>
+</div>

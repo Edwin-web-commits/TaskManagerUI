@@ -1,97 +1,83 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Task } from '../../core/models/task.model';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TaskService } from '../../core/services/task.service';
+import { Task } from '../../core/models/task.model';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskFormComponent } from '../taskform/taskform.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { PageEvent } from '@angular/material/paginator';
+import { sharedImports } from '../../shared/sharedImports';
 
 @Component({
-  selector: 'app-tasklist',
   standalone: true,
-  imports: [CommonModule],
-  template: `
-    <div class="task-list">
-      <h2>Tasks</h2>
-      <div class="task-items">
-        @for (task of tasks; track task.id) {
-          <div class="task-item" [class.completed]="task.isCompleted">
-            <div class="task-content">
-              <h3>{{ task.title }}</h3>
-              <p>{{ task.description }}</p>
-              <small>Created: {{ task.createdAt | date }}</small>
-            </div>
-            <div class="task-actions">
-              <button (click)="toggleTaskCompletion(task)">
-                {{ task.isCompleted ? 'Mark Incomplete' : 'Mark Complete' }}
-              </button>
-              <button (click)="editTask(task)">Edit</button>
-              <button (click)="deleteTask(task)">Delete</button>
-            </div>
-          </div>
-        }
-      </div>
-    </div>
-  `,
-  styles: [`
-    .task-list {
-      padding: 1rem;
-    }
-    .task-item {
-      border: 1px solid #ddd;
-      margin-bottom: 1rem;
-      padding: 1rem;
-      border-radius: 4px;
-    }
-    .task-item.completed {
-      background-color: #f8f9fa;
-      opacity: 0.7;
-    }
-    .task-actions {
-      margin-top: 1rem;
-      display: flex;
-      gap: 0.5rem;
-    }
-    button {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-  `]
+  selector: 'app-task-list',
+  templateUrl: './tasklist.component.html',
+  styleUrls: ['./tasklist.component.scss'],
+  imports: [sharedImports]
 })
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
+  loading = false;
+  filter: 'all' | 'pending' | 'completed' = 'all';
+  page = 1;
+  pageSize = 5;
+  total = 0;
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.loadTasks();
+    this.load();
   }
 
-  loadTasks(): void {
-    this.taskService.getTasks().subscribe({
-      next: (tasks) => this.tasks = tasks,
-      error: (error) => console.error('Error loading tasks:', error)
+  load() {
+    this.loading = true;
+    const completed = this.filter === 'all' ? null : (this.filter === 'completed');
+    this.taskService.getTasks(completed).subscribe({
+      next: (res) => {
+        this.tasks = res;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error(err)
+    }
     });
   }
 
-  toggleTaskCompletion(task: Task): void {
-    if (task.id) {
-      this.taskService.toggleTaskCompletion(task.id, task).subscribe({
-        next: () => this.loadTasks(),
-        error: (error) => console.error('Error toggling task:', error)
-      });
-    }
+  changeFilter(f: 'all'|'pending'|'completed') {
+    debugger
+    this.filter = f;
+    this.page = 1;
+    this.load();
   }
 
-  editTask(task: Task): void {
-    // To be implemented with task form component
+  openNew() {
+    const ref = this.dialog.open(TaskFormComponent, { width: '520px', data: { mode: 'create' } });
+    ref.afterClosed().subscribe(v => { if (v) this.load(); });
   }
 
-  deleteTask(task: Task): void {
-    if (task.id && confirm('Are you sure you want to delete this task?')) {
-      this.taskService.deleteTask(task.id).subscribe({
-        next: () => this.loadTasks(),
-        error: (error) => console.error('Error deleting task:', error)
-      });
-    }
+  openEdit(task: Task) {
+    const ref = this.dialog.open(TaskFormComponent, { width: '520px', data: { mode: 'edit', task } });
+    ref.afterClosed().subscribe(v => { if (v) this.load(); });
+  }
+
+  toggleComplete(task: Task) {
+    debugger
+    const updated = { ...task, isCompleted: !task.isCompleted };
+    this.taskService.updateTask(task.id, updated).subscribe(() => this.load());
+  }
+
+  confirmDelete(task: Task) {
+    const ref = this.dialog.open(ConfirmDialogComponent, { width: '420px', data: { title: 'Delete task', message: 'Are you sure you want to delete this task?' } });
+    ref.afterClosed().subscribe(result => {
+      if (result) {
+        this.taskService.deleteTask(task.id!).subscribe(() => this.load());
+      }
+    });
+  }
+
+  onPageChange(event: PageEvent) {
+    this.page = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    this.load();
   }
 }

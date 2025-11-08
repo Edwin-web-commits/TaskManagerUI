@@ -9,13 +9,17 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 export const sharedImports = [
   CommonModule,
   FormsModule,
   ReactiveFormsModule,
+  MatCheckboxModule,
   RouterModule,
+  MatDialogModule,
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule,
