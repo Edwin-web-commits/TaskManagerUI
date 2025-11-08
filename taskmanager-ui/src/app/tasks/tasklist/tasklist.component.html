@@ -18,25 +18,58 @@
 
 <div *ngIf="loading" class="spinner"><mat-spinner diameter="36"></mat-spinner></div>
 
-<div *ngIf="!loading && tasks.length===0" class="empty">
+<div *ngIf="!loading && errorMsg" class="error-box">
+  <mat-icon color="warn">error_outline</mat-icon>
+  {{ errorMsg }}
+</div>
+
+<div *ngIf="!loading && !errorMsg && tasks.length===0" class="empty">
   <p *ngIf="filter==='pending'">No pending tasks. Great work!</p>
   <p *ngIf="filter==='completed'">No completed tasks yet.</p>
   <p *ngIf="filter==='all'">No tasks found. Create your first task!</p>
 </div>
 
 <div class="task-list">
-  <mat-card *ngFor="let t of tasks" [ngClass]="{'completed': t.isCompleted}" class="task-card">
+  <mat-card
+  *ngFor="let t of tasks"
+  [ngClass]="{ 'completed': t.isCompleted }"
+  class="task-card"
+>
+  <div class="task-wrapper">
     <div class="left">
-      <mat-checkbox [checked]="t.isCompleted" (change)="toggleComplete(t)"></mat-checkbox>
+      <mat-checkbox
+        [checked]="t.isCompleted"
+        (change)="toggleComplete(t)"
+        aria-label="Mark as complete"
+      ></mat-checkbox>
     </div>
+
     <div class="center">
       <h3 class="title">{{ t.title }}</h3>
-      <p class="desc">{{ t.description }}</p>
-      <div class="date">{{ t.createdAt | date:'mediumDate' }}</div>
+      <p *ngIf="t.description" class="desc">{{ t.description }}</p>
+      <div class="date">{{ t.createdAt | date: 'mediumDate' }}</div>
     </div>
+
     <div class="right">
-      <button mat-icon-button matTooltip="Edit" (click)="openEdit(t)"><mat-icon>edit</mat-icon></button>
-      <button mat-icon-button color="warn" matTooltip="Delete" (click)="confirmDelete(t)"><mat-icon>delete</mat-icon></button>
+      <button
+        mat-icon-button
+        matTooltip="Edit"
+        (click)="openEdit(t)"
+        class="edit-btn"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        color="warn"
+        matTooltip="Delete"
+        (click)="confirmDelete(t)"
+        class="delete-btn"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
     </div>
-  </mat-card>
+  </div>
+</mat-card>
+
 </div>
