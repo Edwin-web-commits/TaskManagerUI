@@ -1,59 +1,57 @@
-# TaskmanagerUi
+# 📇 Address Book App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.3.
+A Task Manager web application built with **Angular (standalone components)**. It provides CRUD operations for managing tasks (create, edit, delete, toggle complete, filter, etc).
 
-## Development server
+---
 
-To start a local development server, run:
+### 🌐 Frontend (Angular)
+- Angular 17 with Standalone Components
+- Angular Material UI
+- SCSS styling
+- create, edit, delete, toggle complete, filter tasks
+- Reactive Forms
+- HTTP Interceptor for Error Handling
 
-```bash
+---
+
+## 🚀 Features
+
+- 🧑‍💼 create, edit, delete, toggle complete, filter tasks
+- 🔍 Filter by completion status
+- 📊 Logging and scalable architecture
+
+---
+
+## 📁 Project Structure
+
+Frontend
+address-book-frontend/
+├── src/
+│   ├── app/
+│   │   ├── core/
+│   │   ├── shared/
+│   │   ├── tasks/
+│   ├── assets/
+│   ├── environments/
+
+
+## Run Frontend 
+Navigate to the frontend directory:
+cd taskmanager-ui
+
+Install dependencies:
+npm install
+
+Run the frontend:
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open the application in your browser at http://localhost:4200.
 
-## Code scaffolding
+License
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+This project is licensed under the MIT License.
 
-```bash
-ng generate component component-name
-```
+Contributors
+Edwin Motlokwa - Developer
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Feel free to contribute to this project by submitting issues or pull requests!
