@@ -1,11 +1,11 @@
-# 📇 Address Book App
+# 📇 Task Manager App
 
 A Task Manager web application built with **Angular (standalone components)**. It provides CRUD operations for managing tasks (create, edit, delete, toggle complete, filter, etc).
 
 ---
 
 ### 🌐 Frontend (Angular)
-- Angular 17 with Standalone Components
+- Angular 20 with Standalone Components
 - Angular Material UI
 - SCSS styling
 - create, edit, delete, toggle complete, filter tasks
@@ -25,7 +25,7 @@ A Task Manager web application built with **Angular (standalone components)**. I
 ## 📁 Project Structure
 
 Frontend
-address-book-frontend/
+taskmanager-ui/
 ├── src/
 │   ├── app/
 │   │   ├── core/
