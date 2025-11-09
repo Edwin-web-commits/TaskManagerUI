@@ -1,2 +1,57 @@
-# TaskManagerUI
-A mini task management application where users can perform CRUD operations on the tasks
+# 📇 Task Manager App
+
+A Task Manager web application built with **Angular (standalone components)**. It provides CRUD operations for managing tasks (create, edit, delete, toggle complete, filter, etc).
+
+---
+
+### 🌐 Frontend (Angular)
+- Angular 20 with Standalone Components
+- Angular Material UI
+- SCSS styling
+- create, edit, delete, toggle complete, filter tasks
+- Reactive Forms
+- HTTP Interceptor for Error Handling
+
+---
+
+## 🚀 Features
+
+- 🧑‍💼 create, edit, delete, toggle complete, filter tasks
+- 🔍 Filter by completion status
+- 📊 Logging and scalable architecture
+
+---
+
+## 📁 Project Structure
+
+Frontend
+taskmanager-ui/
+├── src/
+│   ├── app/
+│   │   ├── core/
+│   │   ├── shared/
+│   │   ├── tasks/
+│   ├── assets/
+│   ├── environments/
+
+
+## Run Frontend 
+Navigate to the frontend directory:
+cd taskmanager-ui
+
+Install dependencies:
+npm install
+
+Run the frontend:
+ng serve
+
+Open the application in your browser at http://localhost:4200.
+
+License
+
+This project is licensed under the MIT License.
+
+Contributors
+Edwin Motlokwa - Developer
+
+Feel free to contribute to this project by submitting issues or pull requests!
