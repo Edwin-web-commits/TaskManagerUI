@@ -1,6 +1,8 @@
 # 📇 Task Manager App
 
 A Task Manager web application built with **Angular (standalone components)**. It provides CRUD operations for managing tasks (create, edit, delete, toggle complete, filter, etc).
+<img width="1171" height="957" alt="image" src="https://github.com/user-attachments/assets/6f9b71ea-b47c-471e-a24b-c706a91a090d" />
+<img width="1163" height="768" alt="image" src="https://github.com/user-attachments/assets/5c57bf41-82ab-4d44-9a25-9937cdb73214" />
 
 ---
 
