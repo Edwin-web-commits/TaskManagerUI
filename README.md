@@ -36,14 +36,15 @@ taskmanager-ui/
 
 
 ## Run Frontend 
-Navigate to the frontend directory:
-cd taskmanager-ui
+1. Navigate to the frontend directory:
+- cd taskmanager-ui
+- npm install -g @angular/cli
 
-Install dependencies:
-npm install
+2. Install dependencies:
+- npm install
 
-Run the frontend:
-ng serve
+3. Run the frontend:
+- ng serve
 
 Open the application in your browser at http://localhost:4200.
 
