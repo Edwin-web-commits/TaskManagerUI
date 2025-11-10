@@ -44,7 +44,7 @@ taskmanager-ui/
 - npm install
 
 3. Run the frontend:
-ng serve
+- ng serve
 
 Open the application in your browser at http://localhost:4200.
 
